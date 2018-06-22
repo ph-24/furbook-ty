@@ -4,14 +4,18 @@
 <h2>
 	{{$cat->name}}
 </h2>
-<a href="{{url('cats/'.$cat->id.'edit')}}">
+<a href="{{url('cats/'.$cat->id.'/edit')}}" style="float: left; margin-right: .5em;">
 	<span class="glyphicon glyphicon-edit"></span>
 	Edit
 </a>
-<a href="{{url('cats/'.$cat->id.'delete')}}">
-	<span class="glyphicon glyphicon-trash"></span>
+	<form id="form_delete" action="/cats/{{$cat->id}}" method="POST">
+		<input type="hidden" name="_method" value="DELETE">
+    	<input type="hidden" name="_token" value="{{ csrf_token() }}">
+		<a href="javascript:document.getElementById('form_delete').submit()">
+		<span class="glyphicon glyphicon-trash"></span>
 	Delete
 </a>
+	</form>
 <p>Date of Birth:{{$cat->date_of_birth}}</p>
 <p>
 	@if($cat->breed)
