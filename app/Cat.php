@@ -16,3 +16,4 @@ class Cat extends Model
 //     return 'name';
 // }
 }
+	

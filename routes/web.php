@@ -48,11 +48,11 @@ Route::post('/cats', function () {
 
 // Edit
 Route::get('/cats/{id}/edit', function ($id) {
-		$cat= Furbook\Cat::find($id)->first();
+		$cat= Furbook\Cat::find($id);
 		return view('cats.edit')->with('cat',$cat);
 });
 Route::put('/cats/{id}', function ($id) {
-	$cat=Furbook\Cat::find($id)->first();
+	$cat=Furbook\Cat::find($id);
 	$cat->update(Input::all());
 	return redirect('cats/'.$cat->id)->withSuccess('Update success');
 });
