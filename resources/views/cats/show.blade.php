@@ -1,14 +1,14 @@
 @extends('layouts.master')
 @section('header')
-<a href="{{url('/')}}">Back to overview</a>
+<a href="{{route('cats.index')}}">Back to overview</a>
 <h2>
 	{{$cat->name}}
 </h2>
-<a href="{{url('cats/'.$cat->id.'/edit')}}" style="float: left; margin-right: .5em;">
+<a href="{{route('cats.edit',$cat->id)}}" style="float: left; margin-right: .5em;">
 	<span class="glyphicon glyphicon-edit"></span>
 	Edit
 </a>
-	<form id="form_delete" action="/cats/{{$cat->id}}" method="POST">
+	<form id="form_delete" action="{{route('cats.destroy',$cat->id)}}" method="POST">
 		<input type="hidden" name="_method" value="DELETE">
     	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<a href="javascript:document.getElementById('form_delete').submit()">
