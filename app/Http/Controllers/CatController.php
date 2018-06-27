@@ -4,6 +4,7 @@ namespace Furbook\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Furbook\Cat;
+use validator;
 class CatController extends Controller
 
 {
@@ -36,6 +37,30 @@ class CatController extends Controller
      */
     public function store(Request $request)
     {
+        //define rule validate
+         $validator=$request->validate([
+        //$validator= Validator::make($request->all(),
+            'name'=>'required|max:255',
+            'date_of_birth'=>'required|date_format:"Y/m/d"',
+            'breed_id'=>'numeric',
+        ],
+         [
+        'required' => 'Cột :attribute là bắt buộc.',
+        'size' => 'Cột :attribute độ dài phải nhỏ hơn :size .',
+        'date_format' => 'Cột :attribute phai là kiểu Y/m/d.',
+        'numeric' => 'Cột :attribute phải là số.',
+        ]
+
+    );
+
+        //  //if data validate
+        //  if ($validator->fails()) {
+        //     return redirect('cats/create')
+        //                 ->withErrors($validator)
+        //                 ->withInput();
+        // }
+
+        //insert cat
        $cat = Cat::create($request->all());
        return redirect()
             ->route('cats.show', $cat->id)
