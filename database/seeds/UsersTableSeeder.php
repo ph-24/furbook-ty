@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class CatsTableSeeder extends Seeder
+class UsersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,32 +11,33 @@ class CatsTableSeeder extends Seeder
      */
     public function run()
     {
+        
         $scurentTime= date('Y-m-d H:i:s');
-        DB::table('cats')->insert([
+        DB::table('users')->insert([
         	[
         		'id'=>1,
-        		'name'=> 'Meo Ba Tu Long Dai',
-        		'date_of_birth'=>date('Y-m-d'),
-        		'breed_id'=>1,
-                'user_id'=>1,
+        		'name'=> 'user',
+        		'email'=>'user@gmail.com',
+        		'password'=>bcrypt('123456'),
+                'is_admin'=>false,
         		'created_at'=>$scurentTime,
         		'updated_at'=>$scurentTime
         	],
         	[
         		'id'=>2,
-        		'name'=> 'Meo Tam The Duoi Ngan',
-        		'date_of_birth'=>date('Y-m-d'),
-        		'breed_id'=>2,
-                'user_id'=>2,
+        		'name'=> 'admin',
+        		'email'=>'admin@gmail.com',
+        		'password'=>bcrypt('123456'),
+                'is_admin'=>true,
         		'created_at'=>$scurentTime,
         		'updated_at'=>$scurentTime
         	],
         	[
         		'id'=>3,
-        		'name'=> 'Meo Rung repal',
-        		'date_of_birth'=>date('Y-m-d'),
-        		'breed_id'=>3,
-                'user_id'=>3,
+        		'name'=> 'super.admin',
+        		'email'=>'super.admin@gmail.com',
+        		'password'=>bcrypt('123456'),
+                'is_admin'=>true,
         		'created_at'=>$scurentTime,
         		'updated_at'=>$scurentTime
         	]

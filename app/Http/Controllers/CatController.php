@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Furbook\Http\Requests\CatRequest;
 use Furbook\Cat;
 use validator;
+use Auth;
 class CatController extends Controller
 
 {
@@ -14,6 +15,15 @@ class CatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('admin')->only('destroy');
+    }
     public function index()
     {
         $cats=Cat::All();
@@ -88,6 +98,9 @@ class CatController extends Controller
      */
     public function edit(Cat $cat)
     {
+        if (!Auth::user()->CanEdit($cat)) {
+            return redirect()->route('cats.index')->withErrors('Fermission denied');
+        }
         return view('cats.edit')->with('cat',$cat);
     }
 
@@ -100,6 +113,9 @@ class CatController extends Controller
      */
     public function update(CatRequest $request, Cat $cat)
     {
+         if (!Auth::user()->canEdit($cat)) {
+            return redirect()->route('cats.index')->withErrors('Fermission denied');
+        }
         $cat->update($request->all());
         return redirect()
             ->route('cats.show', $cat->id)

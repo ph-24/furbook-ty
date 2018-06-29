@@ -13,14 +13,7 @@ use Illuminate\Support\Facades\Input;
 // });
 
 // // Display breeds
-// Route::get('/cats/breeds/{name}', function ($name) {
-//     	$breed=Furbook\Breed::with('cats')
-//     		->where('name',$name)
-//     		->first();
-//     		return view('cats.index')
-//     			->with('breed',$breed)
-//     			->with('cats',$breed->cats);
-// });
+
 
 // Display info cat
 
@@ -30,5 +23,18 @@ use Illuminate\Support\Facades\Input;
 // })->where('id','[0-9]+');
 
 
+Route::group(['middleware'=>'auth'],function (){
+	Route::resource('cats','CatController');
 
-Route::resource('cats','CatController');
+	Route::get('/cats/breeds/{name}', function ($name) {
+    	$breed=Furbook\Breed::with('cats')
+    		->where('name',$name)
+    		->first();
+    		return view('cats.index')
+    			->with('breed',$breed)
+    			->with('cats',$breed->cats);
+	});
+});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
